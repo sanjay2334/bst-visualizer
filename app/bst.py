@@ -1,10 +1,15 @@
-from binarytree import Node
+from binarytree import Node, bst as bst2
 
 
 class BST:
 
-    def __init__(self, node=None):
-        self.root = node
+    def __init__(self, balanced=False, node=None):
+        self.balancedbst = False
+        if balanced: 
+            self.root = bst2(height=4, is_perfect=True)
+            self.balancedbst = True
+        else:
+            self.root = node
 
     def binary_insert(self, num, node=None):
         if node is None:
@@ -57,7 +62,10 @@ class BST:
         return ans_list
 
     def get_output(self):
-        output = str(self.root)
+        output = str() 
+        if self.balancedbst: 
+            output = 'Balanced BST\n'
+        output += str(self.root)
         output += '\n\nPREORDER\t' + str(self.preorder([]))
         output += '\nINORDER\t\t' + str(self.inorder([]))
         output += '\nPOSTORDER\t' + str(self.postorder([]))
@@ -77,3 +85,27 @@ bst.binary_insert(14)
 bst.binary_insert(22)
 
 print(bst.root)
+
+bbst = bst2(height=3, is_perfect=True)
+print(bbst)
+#print(bbst.inorder)
+#print(type(bbst).__name__)
+
+def sortedArrayToBST(arr):
+	if not arr:
+		return None
+
+	# find middle index
+	mid = (len(arr)) // 2
+	
+	# make the middle element the root
+	root = Node(arr[mid])
+	
+	# left subtree of root has all
+	# values <arr[mid]
+	root.left = sortedArrayToBST(arr[:mid])
+	
+	# right subtree of root has all
+	# values >arr[mid]
+	root.right = sortedArrayToBST(arr[mid+1:])
+	return root
