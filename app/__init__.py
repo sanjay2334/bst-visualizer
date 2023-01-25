@@ -3,23 +3,36 @@ from flask_restful import Resource, Api
 from binarytree import Node
 from app.bst import BST
 import random
+import time 
 
 app = Flask(__name__)
 api = Api(app)
 
+biglist = list(range(1, 30))
 
 class MainResource(Resource):
     def get(self):
         # strip query params
-        nodes = request.args.get('nodes')
-
-        if nodes:
-            nodes = nodes.split(',')
-
-            shuffle = request.args.get('shuffle')
+        n = request.args.get('nodes')
+        if n:
+            n = n.strip().split(',')
+            nodes = [int(e) for e in n]
+            # print(nodes, nodes[0], nodes[1])
+            range = request.args.get('range')
+            shuffle = None 
+            if range and range.lower() == 'true': 
+                nodes[:] = biglist
+                shuffle = "true"
+            
+            if not shuffle:
+                shuffle = request.args.get('shuffle')
 
             if shuffle and shuffle.lower() == 'true':
-                random.shuffle(nodes)
+                linearTree = random.choice([False, True, False, False, False])
+                if linearTree:
+                    nodes.sort()
+                else:
+                    random.shuffle(nodes)
 
             bst = BST()
 
@@ -40,4 +53,5 @@ class MainResource(Resource):
 api.add_resource(MainResource, '/')
 
 if __name__ == '__main__':
+    random.seed(time)
     app.run()
