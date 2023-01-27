@@ -49,7 +49,7 @@ class MainResource(Resource):
             response.mimetype = 'text/plain'
                 
         else:
-            response = 'You must supply a comma delimited list of numbers in a \'nodes\' query param!'
+            response = 'You must supply a comma delimited list of numbers in a \'nodes\' query param!, Test Build'
         return response
 
 
