@@ -66,6 +66,7 @@ class BST:
         if self.balancedbst: 
             output = 'Balanced BST\n'
         output += str(self.root)
+	output += '\n\nNODECOUNT\t' + str(len(self.preorder([])))
         output += '\n\nPREORDER\t' + str(self.preorder([]))
         output += '\nINORDER\t\t' + str(self.inorder([]))
         output += '\nPOSTORDER\t' + str(self.postorder([]))
